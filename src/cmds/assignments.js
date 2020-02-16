@@ -1,6 +1,6 @@
 const axios = require('axios');
 const inquirer = require('inquirer');
-const token = '';
+const url = '';
 
 
 module.exports = (args) => {
