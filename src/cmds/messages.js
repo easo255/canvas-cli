@@ -1,10 +1,9 @@
 const axios = require('axios');
-const url = '';
-
+const data = require('../config')
 //Add url and bearer token from canvas
 module.exports = (args) => {
     var messages = [];
-    axios.get( `${url}api/v1/conversations`, { headers: { Authorization: `Bearer ${''}` } })  
+    axios.get( `${data.canvasUrl}api/v1/conversations`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
     .then(response => {
     for(i = 0; i< response.data.length; i++){
         if(response.data[i].workflow_state == 'read'){
