@@ -26,10 +26,6 @@ module.exports = () => {
       break
 
       case 'assignments':
-      require('./cmds/example')(args)
-      break
-
-      case 'assignmentss':
       require('./cmds/assignments')(args)
       break
 
