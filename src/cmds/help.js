@@ -10,7 +10,8 @@ const menus = {
       help ............... show help menu for a command
       messages .............. Get subject, date and participants of last unread messages
       ennrollment .............. Coming soon
-      announcements .............. Get unread announcements in all enrolled subjects`,
+      announcements .............. Get unread announcements in all enrolled subjects(coming soon)
+      assignments .............. Get all assignments in selected subject`,
   
   }
   

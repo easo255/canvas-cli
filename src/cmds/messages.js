@@ -6,7 +6,7 @@ module.exports = (args) => {
     axios.get( `${data.canvasUrl}api/v1/conversations`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
     .then(response => {
     for(i = 0; i< response.data.length; i++){
-        if(response.data[i].workflow_state == 'read'){
+        if(!response.data[i].workflow_state == 'read'){
             messages.push(response.data[i])
         }
     }
