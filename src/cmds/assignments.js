@@ -1,11 +1,13 @@
 const axios = require('axios');
 const inquirer = require('inquirer');
 const data = require('../config')
+const ora = require('ora')
 
 
 module.exports = (args) => {
 var result =[];
 async function fetchData(){
+  const spinner = ora().start();
 
     await axios.get(`${data.canvasUrl}/api/v1/courses?per_page=100&include[]=term`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
     .then((response) => {
@@ -17,6 +19,7 @@ async function fetchData(){
               value: element.id
             }
             result.push(courseData)
+
           }
           
          
@@ -27,9 +30,9 @@ async function fetchData(){
     .catch(error => {
     });
 
+    spinner.stop()
     return result;
   }
-
   fetchData().then( result => {
     inquirer
         .prompt([

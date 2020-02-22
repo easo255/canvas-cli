@@ -1,13 +1,14 @@
 const axios = require('axios');
 const inquirer = require('inquirer');
-const data = require('../config')
+const data = require('../config');
+const ora = require('ora');
 
 
 
 module.exports = (args) => {
     var result =[];
     async function fetchData(){
-    
+        const spinner = ora().start();
         await axios.get(`${data.canvasUrl}/api/v1/courses?per_page=100&include[]=term`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
         .then((response) => {
             response.data.forEach(element => {
@@ -27,7 +28,7 @@ module.exports = (args) => {
         })
         .catch(error => {
         });
-    
+        spinner.stop();
         return result;
       }
 
@@ -45,7 +46,6 @@ module.exports = (args) => {
             .then(answers => {
               axios.get(`${data.canvasUrl}/api/v1/courses/${answers.course_id}/discussion_topics?only_announcements=true`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
               .then((response) => {
-                
                   response.data.forEach(announcement =>{
                     console.log('Annoucement title: ', announcement.title)
                     console.log('Author: ', announcement.author.display_name)
