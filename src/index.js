@@ -29,6 +29,10 @@ module.exports = () => {
       require('./cmds/assignments')(args)
       break
 
+      case 'announcements':
+      require('./cmds/announcements')(args)
+      break
+
 
       
     default:
