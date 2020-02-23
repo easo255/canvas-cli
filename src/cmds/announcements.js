@@ -44,13 +44,24 @@ module.exports = (args) => {
               }
             ])
             .then(answers => {
-              axios.get(`${data.canvasUrl}/api/v1/courses/${answers.course_id}/discussion_topics?only_announcements=true`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
+              let filter = 'unread';
+              if(args.all){
+                filter = 'all';
+              }
+
+              axios.get(`${data.canvasUrl}/api/v1/courses/${answers.course_id}/discussion_topics?only_announcements=true&filter_by=${filter}`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
               .then((response) => {
+                if(response.data.length > 0 ){
                   response.data.forEach(announcement =>{
                     console.log('Annoucement title: ', announcement.title)
+                    console.log('Annoucement title: ', announcement.message)
                     console.log('Author: ', announcement.author.display_name)
                     console.log('----------------')
                   })
+                }else{
+                  console.log("No unread announcements")
+                }
+
                   });
             });}
       );
