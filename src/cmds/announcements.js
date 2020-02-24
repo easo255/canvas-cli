@@ -29,7 +29,6 @@ module.exports = (args) => {
             
         })
         .catch(error => {
-          console.log(error)
         });
         spinner.stop();
         return result;
@@ -56,17 +55,21 @@ module.exports = (args) => {
               .then((response) => {
                 if(response.length > 0 ){
                   response.forEach(announcement =>{
-                    console.log('Annoucement title: ', announcement.title)
+                    console.log('Date', new Date(announcement.created_at).toLocaleDateString())
+                    console.log('Title: ', announcement.title)
                     console.log('------------------------------')
                     console.log('Message: ', striptags(announcement.message))
                     console.log('Author: ', announcement.author.display_name)
                     console.log('------------------------------')
+                    if(announcement.read_state == 'unread'){
+                      axios.put(`/api/v1/courses/${answers.course_id}/discussion_topics/${announcement.id}/read`).catch()
+                    }
                   })
                 }else{
                   console.log("No unread announcements")
                 }
 
-                  });
+                  }).catch();
             });}
       );
 
