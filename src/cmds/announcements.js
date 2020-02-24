@@ -1,8 +1,9 @@
-const axios = require('axios');
 const inquirer = require('inquirer');
 const data = require('../config');
 const ora = require('ora');
-var striptags = require('striptags');
+var striptags = require('striptags'); 
+const axios = require('../api/http').instance
+
 
 
 
@@ -10,9 +11,9 @@ module.exports = (args) => {
     var result =[];
     async function fetchData(){
         const spinner = ora().start();
-        await axios.get(`${data.canvasUrl}/api/v1/courses?per_page=100&include[]=term`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
+        await axios.get('/api/v1/courses?per_page=100&include[]=term')  
         .then((response) => {
-            response.data.forEach(element => {
+            response.forEach(element => {
               var end_at = new Date(element.term['end_at']);
               if(end_at > new Date()){
                 var courseData = {
@@ -28,6 +29,7 @@ module.exports = (args) => {
             
         })
         .catch(error => {
+          console.log(error)
         });
         spinner.stop();
         return result;
@@ -50,10 +52,10 @@ module.exports = (args) => {
                 filter = 'all';
               }
 
-              axios.get(`${data.canvasUrl}/api/v1/courses/${answers.course_id}/discussion_topics?only_announcements=true&filter_by=${filter}`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
+              axios.get(`/api/v1/courses/${answers.course_id}/discussion_topics?only_announcements=true&filter_by=${filter}`)  
               .then((response) => {
-                if(response.data.length > 0 ){
-                  response.data.forEach(announcement =>{
+                if(response.length > 0 ){
+                  response.forEach(announcement =>{
                     console.log('Annoucement title: ', announcement.title)
                     console.log('------------------------------')
                     console.log('Message: ', striptags(announcement.message))
