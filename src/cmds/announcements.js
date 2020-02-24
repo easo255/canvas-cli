@@ -2,6 +2,7 @@ const axios = require('axios');
 const inquirer = require('inquirer');
 const data = require('../config');
 const ora = require('ora');
+var striptags = require('striptags');
 
 
 
@@ -54,9 +55,10 @@ module.exports = (args) => {
                 if(response.data.length > 0 ){
                   response.data.forEach(announcement =>{
                     console.log('Annoucement title: ', announcement.title)
-                    console.log('Annoucement title: ', announcement.message)
+                    console.log('------------------------------')
+                    console.log('Message: ', striptags(announcement.message))
                     console.log('Author: ', announcement.author.display_name)
-                    console.log('----------------')
+                    console.log('------------------------------')
                   })
                 }else{
                   console.log("No unread announcements")
