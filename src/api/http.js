@@ -1,5 +1,4 @@
 const axios = require('axios');
-const qs = require('qs')
 const configData = require('../config')
       
 function parseError (messages) {
