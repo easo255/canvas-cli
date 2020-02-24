@@ -42,7 +42,7 @@ async function fetchData(){
           }
         ])
         .then(answers => {
-          axios.get(`${data.canvasUrl}/api/v1/courses/${answers.course_id}/assignments`, { headers: { Authorization: `Bearer ${data.canvasToken}` } })  
+          axios.get(`/api/v1/courses/${answers.course_id}/assignments`)  
           .then((response) => {
             
               response.forEach(assignment =>{
