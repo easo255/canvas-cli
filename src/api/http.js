@@ -1,5 +1,6 @@
 const axios = require('axios');
 const qs = require('qs')
+const configData = require('../config')
       
 /**
  *
@@ -35,7 +36,7 @@ function parseError (messages) {
    * axios instance
    */
   let instance = axios.create({
-    baseURL: `https://jsonplaceholder.typicode.com`
+    baseURL: `${configData.baseURL}`
   })
   // request header
   instance.interceptors.request.use((config) => {
@@ -43,7 +44,9 @@ function parseError (messages) {
     
     // api tokenなどを利用してheaderに載せる場合
     // const apiToken = sessionStorage.getItem('token')
-    // config.headers = { 'Custom-Header-IF-Exist': apiToken }
+    //config.headers = { 'Custom-Header-IF-Exist': apiToken }
+    //config.headers = { 'Authorization': `Bearer ${configData.Token}` } 
+    config. headers= { Authorization: `Bearer ${configData.Token}` } 
     return config
   }, error => {
     return Promise.reject(error)
