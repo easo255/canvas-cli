@@ -11,8 +11,8 @@
  
  ```` 
 {
-    "canvasToken": "",
-    "canvasUrl": ""
+    "Token": "",
+    "baseURL": ""
  } 
  ````
  
