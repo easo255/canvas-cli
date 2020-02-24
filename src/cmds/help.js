@@ -3,14 +3,13 @@ const menus = {
 
       *******CANVAS CLI**********
 
-      canvas [command]
+      canvas [command] <options>
   
       
       version ............ show package version
       help ............... show help menu for a command
       messages .............. Get subject, date and participants of last unread messages
-      ennrollment .............. Coming soon
-      announcements .............. Get unread announcements in all enrolled subjects(coming soon)
+      announcements .............. Get unread announcements in a selected subject optional flag --all for getting read announcements
       assignments .............. Get all assignments in selected subject`,
   
   }
