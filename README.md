@@ -24,7 +24,7 @@
 chmod +x bin/canvas-cli
  ````
 
- 2. Try running the following to verify that everything is installed correctly, before creating symlink. While in the project rot, try running the newly created executable. This should show you the 'help' screen of the CLI  
+ 2. Try running the following to verify that everything is installed correctly, before creating symlink. While in the project root, try running the newly created executable. This should show you the 'help' screen of the CLI  
 ```` 
 ./bin/canvas-cli
  ````
