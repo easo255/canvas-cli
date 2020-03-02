@@ -60,7 +60,6 @@ module.exports = (args) => {
                     console.log('Message: ', striptags(announcement.message))
                     console.log('Author: ', announcement.author.display_name)
                     console.log('------------------------------')
-                    console.log('id', answers.course_id)
                     if(announcement.read_state == 'unread'){
                       axios.put(`/api/v1/courses/${answers.course_id}/discussion_topics/${announcement.id}/read`)
                     }
