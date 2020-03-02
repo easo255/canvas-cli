@@ -20,15 +20,9 @@ module.exports = (args) => {
                   value: element.id
                 }
                 result.push(courseData)
-            
-              
-             
-            });
-          
-            
+            });  
         })
-        .catch(error => {
-        });
+        .catch(error =>{});
         spinner.stop();
         return result;
       }
@@ -36,19 +30,22 @@ module.exports = (args) => {
       if(args.any){
         fetchData().then(courses =>{
           var contextCodes = [];
+          var amountOfUnread = 0;
           courses.forEach(course =>{
             contextCodes.push(`&context_codes[]=course_${course.value}`)
           })
           axios.get(`/api/v1/announcements?${contextCodes.join()}`).then((response)=>{
               response.forEach(announcement =>{
                 if(announcement.read_state == 'unread'){
-                      console.log('Posted: ', new Date(announcement.created_at).toLocaleDateString() + ' by ' +  announcement.author.display_name)
-                      console.log('Title: ', announcement.title)
-                      console.log('------------------------------')
-                      console.log('Message: ', striptags(announcement.message))
-                      console.log('*******************************')
+                  amountOfUnread++
+                  printAnnouncement(announcement);
+                  var courseId = announcement.context_code.split('_')[1];
+                  updateReadState(courseId,announcement.id)
                 }
               })
+              if(amountOfUnread == 0){
+                console.log('no unread announcements')
+              }
           })
         })
 
@@ -74,13 +71,9 @@ module.exports = (args) => {
                   response.sort((a,b) => (a.created_at > b.created_at) ? 1 : ((b.created_at > a.created_at) ? -1 : 0));
                   if(response.length > 0 ){
                     response.forEach(announcement =>{
-                      console.log('Posted: ', new Date(announcement.created_at).toLocaleDateString() + ' by ' +  announcement.author.display_name)
-                      console.log('Title: ', announcement.title)
-                      console.log('------------------------------')
-                      console.log('Message: ', striptags(announcement.message))
-                      console.log('*******************************')
+                      printAnnouncement(announcement);
                       if(announcement.read_state == 'unread'){
-                        axios.put(`/api/v1/courses/${answers.course_id}/discussion_topics/${announcement.id}/read`)
+                        updateReadState(answers.course_id,announcement.id)
                       }
                     })
                   }else{
@@ -91,6 +84,18 @@ module.exports = (args) => {
               });}
         );
       }
-      
+
+  function printAnnouncement(announcement){
+    console.log('*******************************')
+    console.log('Posted: ', new Date(announcement.created_at).toLocaleDateString() + ' by ' +  announcement.author.display_name)
+    console.log('Title: ', announcement.title)
+    console.log('------------------------------')
+    console.log('Message: ', striptags(announcement.message))
+  }
+
+  function updateReadState(courseCode, announcementId){
+    axios.put(`/api/v1/courses/${courseCode}/discussion_topics/${announcementId}/read`)
+
+  }
 
 }
