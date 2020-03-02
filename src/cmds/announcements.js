@@ -15,13 +15,12 @@ module.exports = (args) => {
         .then((response) => {
             response.forEach(element => {
               var end_at = new Date(element.term['end_at']);
-              if(end_at > new Date()){
                 var courseData = {
                   name: element.course_code,
                   value: element.id
                 }
                 result.push(courseData)
-              }
+            
               
              
             });
@@ -61,8 +60,9 @@ module.exports = (args) => {
                     console.log('Message: ', striptags(announcement.message))
                     console.log('Author: ', announcement.author.display_name)
                     console.log('------------------------------')
+                    console.log('id', answers.course_id)
                     if(announcement.read_state == 'unread'){
-                      axios.put(`/api/v1/courses/${answers.course_id}/discussion_topics/${announcement.id}/read`).catch()
+                      axios.put(`/api/v1/courses/${answers.course_id}/discussion_topics/${announcement.id}/read`)
                     }
                   })
                 }else{

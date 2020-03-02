@@ -17,7 +17,7 @@ function parseError (messages) {
      if (response.status === 200) {    
       return response.data
     } else {
-      return this.parseError(response.data.messages)
+      return parseError(response.data.messages)
     }
   }
 
