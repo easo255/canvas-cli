@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const data = require('../config')
+const ora = require('ora')
 const axios = require('../api/http').instance
 
 
@@ -7,6 +7,7 @@ const axios = require('../api/http').instance
 module.exports = (args) => {
 var result =[];
 async function fetchData(){
+  const spinner = ora().start();
 
     await axios.get('/api/v1/courses?per_page=100&include[]=term')  
     .then((response) => {
@@ -18,6 +19,7 @@ async function fetchData(){
               value: element.id
             }
             result.push(courseData)
+
           }
           
          
@@ -28,9 +30,9 @@ async function fetchData(){
     .catch(error => {
     });
 
+    spinner.stop()
     return result;
   }
-
   fetchData().then( result => {
     inquirer
         .prompt([
