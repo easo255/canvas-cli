@@ -31,7 +31,7 @@ chmod +x bin/canvas-cli
 
  3. if all is fine, run the following in the project root. This wil make it accesible from outside the current directory
  ```` 
-npm-link 
+npm link 
  ````
 
  4. Verify by running the following from a new terminal
