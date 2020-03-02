@@ -32,8 +32,7 @@ module.exports = (args) => {
         spinner.stop();
         return result;
       }
-
-
+      
       fetchData().then( result => {
         inquirer
             .prompt([
@@ -52,13 +51,13 @@ module.exports = (args) => {
 
               axios.get(`/api/v1/courses/${answers.course_id}/discussion_topics?only_announcements=true&filter_by=${filter}`)  
               .then((response) => {
+                response.sort((a,b) => (a.created_at > b.created_at) ? 1 : ((b.created_at > a.created_at) ? -1 : 0));
                 if(response.length > 0 ){
                   response.forEach(announcement =>{
-                    console.log('Date', new Date(announcement.created_at).toLocaleDateString())
+                    console.log('Posted: ', new Date(announcement.created_at).toLocaleDateString() + ' by ' +  announcement.author.display_name)
                     console.log('Title: ', announcement.title)
                     console.log('------------------------------')
                     console.log('Message: ', striptags(announcement.message))
-                    console.log('Author: ', announcement.author.display_name)
                     console.log('------------------------------')
                     if(announcement.read_state == 'unread'){
                       axios.put(`/api/v1/courses/${answers.course_id}/discussion_topics/${announcement.id}/read`)
